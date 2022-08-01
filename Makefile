@@ -1,0 +1,54 @@
+# **************************************************************************** #
+#                                                                              #
+#                                                         :::      ::::::::    #
+#    Makefile                                           :+:      :+:    :+:    #
+#                                                     +:+ +:+         +:+      #
+#    By: cfabian <cfabian@student.42wolfsburg.de>   +#+  +:+       +#+         #
+#                                                 +#+#+#+#+#+   +#+            #
+#    Created: 2022/08/01 11:39:00 by cfabian           #+#    #+#              #
+#    Updated: 2022/08/01 14:00:27 by cfabian          ###   ########.fr        #
+#                                                                              #
+# **************************************************************************** #
+
+NAME = aws-green-spot
+SRC_DIRS = .
+SRCS = $(foreach dir,$(SRC_DIRS),$(wildcard $(dir)/*.go))
+red=\033[0;31m
+ccyellow=$(shell echo -e "\033[0;33m")
+end=\033[0m
+
+#handle different systems
+OS = $(shell uname | tr '[:upper:]' '[:lower:]')
+
+run: $(NAME)
+	./$(NAME)
+
+$(NAME): main.go
+	GOARCH=amd64 GOOS=$(OS) go build -o $(NAME) main.go
+
+all: test run
+
+main.go:
+	@echo "$(red)Couldn't find main.go$(end)"
+
+clean:
+	go clean
+
+fclean: clean
+	$(RM) $(NAME)
+
+re: clean all
+
+format:
+	gofmt -w $(SRCS)
+
+lint:
+	golangci-lint run
+
+test: lint
+
+#dep:
+#	go mod download
+
+# add .PHONY so that the non-targetfile - rules work even if a file with the same name exists.
+.PHONY: all run clean fclean lint test dep re
