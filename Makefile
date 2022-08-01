@@ -6,7 +6,7 @@
 #    By: cfabian <cfabian@student.42wolfsburg.de>   +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/08/01 11:39:00 by cfabian           #+#    #+#              #
-#    Updated: 2022/08/01 12:40:04 by cfabian          ###   ########.fr        #
+#    Updated: 2022/08/01 13:58:07 by cfabian          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -40,7 +40,7 @@ fclean: clean
 re: clean all
 
 format:
-	gofmt -w $(SRC)
+	gofmt -w $(SRCS)
 
 lint:
 	golangci-lint run
