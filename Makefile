@@ -6,7 +6,7 @@
 #    By: cfabian <cfabian@student.42wolfsburg.de>   +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/08/01 11:39:00 by cfabian           #+#    #+#              #
-#    Updated: 2022/08/01 13:58:07 by cfabian          ###   ########.fr        #
+#    Updated: 2022/08/01 14:00:27 by cfabian          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -20,16 +20,16 @@ end=\033[0m
 #handle different systems
 OS = $(shell uname | tr '[:upper:]' '[:lower:]')
 
-all: $(NAME)
-
-main.go:
-	@echo "$(red)Couldn't find main.go$(end)"
+run: $(NAME)
+	./$(NAME)
 
 $(NAME): main.go
 	GOARCH=amd64 GOOS=$(OS) go build -o $(NAME) main.go
 
-run: $(NAME)
-	./$(NAME)
+all: test run
+
+main.go:
+	@echo "$(red)Couldn't find main.go$(end)"
 
 clean:
 	go clean
@@ -51,4 +51,4 @@ test: lint
 #	go mod download
 
 # add .PHONY so that the non-targetfile - rules work even if a file with the same name exists.
-.PHONY: all clean fclean lint test re
+.PHONY: all run clean fclean lint test dep re
